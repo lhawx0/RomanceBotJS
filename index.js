@@ -1,12 +1,30 @@
 const { Client, Intents } = require('discord.js');
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({ 
+  intents: [
+    Intents.FLAGS.GUILDS, 
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.GUILD.GUILD_VOICE_STATES
+  ] });
 
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const fs = requrie("fs")
+const {Player} = require("discord-player")
+
 const token = process.env['TOKEN']
 const GUILD_ID= process.env['GUILD_ID']
 const CLIENT_ID = process.env['CLIENT_ID']
+
+const LOAD_SLASH = process.argv[2] == "load"
+
+client.slashcommands = new Discord.Collection()
+client.player = new Plyaer(client, {
+  ytdlOptions:{
+    quality: "highestaudio",
+    highWaterMark: 1 << 25
+  }
+})
 
 const commands = [{
   name: 'amogus',
